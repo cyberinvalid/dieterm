@@ -2,7 +2,7 @@
 
 ### Features
 
-`DIE Terminal` is a back-end component written in pure JavaScript that helps write executable flexible modules quickly and easily
+`DIE Terminal` is a back-end component written in pure JavaScript that helps write executable flex modules quickly and easily
 
 ### Installation
 
@@ -10,8 +10,17 @@
 npm install --save https://github.com/cyberinvalid/dieterm.git
 ```
 
+### Requires
+
+- nodejs start with the parameter  --experimental-json-modules
+
+```bash
+node  --experimental-json-modules ...
+```
+
 ### Quick Start
 ```javascript
+'use strict';
 import Terminal from 'dieterm';
 
 (async () => { 
