@@ -24,6 +24,9 @@ export default class Terminal extends IO {
         this.mDirs.unshift(...dirs);
 
         this.promise = new Promise(async resolve => {
+            await fs.mkdir(this.logDir, { recursive: true });
+            await fs.mkdir(this.fileDir, { recursive: true });
+
             await this.loadDb();
             await clear.call(this);
 
