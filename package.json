@@ -1,0 +1,35 @@
+{
+  "name": "dieterm",
+  "version": "0.4.1",
+  "description": "DIE terminal",
+  "main": "./libs/core.mjs",
+  "scripts": {
+    "dev": "node --experimental-json-modules --no-warnings -r dotenv/config ./standalone.mjs",
+    "start": "node --experimental-json-modules --no-warnings ./standalone.mjs"
+  },
+  "homepage": "https://github.com/cyberinvalid/dieterm",
+	"bugs": {
+		"url": "https://github.com/cyberinvalid/dieterm/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/cyberinvalid/dieterm.git"
+	},
+  "keywords": [
+    "terminal",
+    "dieterm"
+  ],
+  "author": "@cyberinvalid",
+  "license": "MIT",
+  "dependencies": {
+    "lowdb": "^1.0.0",
+    "subarg": "^1.0.0"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0"
+  },
+  "engines": {
+    "node": ">=10.12.0",
+    "npm": ">=6.0.0"
+  }
+}
