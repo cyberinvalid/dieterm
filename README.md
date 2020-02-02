@@ -2,7 +2,7 @@
 
 ### Features
 
-`DIE Terminal` is a back-end component written in pure JavaScript that helps write executable flex modules quickly and easily
+`DIE Terminal` is a back-end component written in pure JavaScript that helps write executable flexible modules quickly and easily
 
 ### Installation
 
