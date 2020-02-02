@@ -4,8 +4,8 @@
   "description": "DIE terminal",
   "main": "./libs/core.mjs",
   "scripts": {
-    "dev": "node --experimental-json-modules --no-warnings -r dotenv/config ./standalone.mjs",
-    "start": "node --experimental-json-modules --no-warnings ./standalone.mjs"
+    "dev": "node --no-warnings -r dotenv/config ./standalone.mjs",
+    "start": "node --no-warnings ./standalone.mjs"
   },
   "homepage": "https://github.com/cyberinvalid/dieterm",
   "bugs": {

@@ -1,5 +1,5 @@
 import { uuid } from './utils.mjs';
-import { dir } from './utils.mjs';
+import { LIBDIR, APPDATADIR } from './utils.mjs';
 import { join } from 'path';
 import readline from 'readline';
 import os from 'os';
@@ -9,7 +9,6 @@ const LOGTYPE = {
     error: '\x1b[31mError\x1b[0m',
     success: '\x1b[32mSuccess\x1b[0m'
 };
-const LIBDIR = dir(import.meta.url);
 
 export default class IO {
     session = uuid();
@@ -17,9 +16,9 @@ export default class IO {
     lnPoint = false;
     streamReadyStack = [];
     host = process.env.host || os.userInfo().username.toLowerCase();
-    logDir = join(LIBDIR, '../storage/logs/');
-    fileDir = join(LIBDIR, '../storage/files/');
-    storageLink = join(LIBDIR, '../storage/index.json');
+    logDir = join(APPDATADIR, './dieterm/storage/logs/');
+    fileDir = join(APPDATADIR, './dieterm/storage/files/');
+    storageLink = join(APPDATADIR, './dieterm/storage/index.json');
     mDirs = [ join(LIBDIR, '../modules/') ];
 
     constructor(inputStream, outputStream, host, storage) {

@@ -1,7 +1,14 @@
-import pckg from './../package.json';
+// import pkg from '../package.json';
+import { LIBDIR } from './utils.mjs';
+import fileSystem from 'fs';
+import { join } from 'path';
+
+const fs = fileSystem.promises;
+let pkg = false;
 
 export default function clear() {
-    return new Promise(done => {
+    return new Promise(async done => {
+        if(!pkg) pkg = JSON.parse(await fs.readFile(join(LIBDIR, '../package.json')));
         this.rl.output.write(`\x1b[2J\x1b[0f                                    ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄   
                                  ▄▀░░░░░░░░░░░░▄░░░░░░░▀▄  
                                  █░░▄░░░░▄░░░░░░░░░░░░░░█ 
@@ -17,6 +24,6 @@ export default function clear() {
               /____/___/___/    _           __
              / /____ ______ _  (_)__  ___ _/ /
             / __/ -_) __/  ' \\/ / _ \\/ _ \`/ / 
-            \\__/\\__/_/ /_/_/_/_/_//_/\\_,_/_/     v${pckg.version}\n\n\n`, done);
+            \\__/\\__/_/ /_/_/_/_/_//_/\\_,_/_/     v${pkg.version}\n\n\n`, done);
     });
 }

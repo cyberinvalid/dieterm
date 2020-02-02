@@ -10,14 +10,6 @@
 npm install --save https://github.com/cyberinvalid/dieterm.git
 ```
 
-### Requires
-
-- nodejs start with the parameter  --experimental-json-modules
-
-```bash
-node  --experimental-json-modules ...
-```
-
 ### Quick Start
 ```javascript
 'use strict';
