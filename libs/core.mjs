@@ -26,9 +26,11 @@ export default class Terminal extends IO {
     ]);
     savedStates = new Map();
 
-    constructor(inputStream = process.stdin, outputStream = process.stdout, host = false, storage = false, ...dirs) {
-        super(inputStream, outputStream, host, storage);
-        this.mDirs.unshift(...dirs);
+    constructor(settings) {
+        super(settings.inputStream || process.stdin, settings.outputStream || process.stdout, settings.host, settings.storage);
+
+        if(settings.dirs)
+            this.mDirs.unshift(...settings.dirs);
 
         this.promise = new Promise(async resolve => {
             await fs.mkdir(this.logDir, { recursive: true });
