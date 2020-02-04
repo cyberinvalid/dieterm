@@ -30,15 +30,15 @@ import Terminal from 'dieterm';
 ```
 ### Terminal Class
 
-This is an initializing promise-like class with the following arguments:
+This is an initializing promise-like class with the following argument object:
 
-| Argument | Default |
-| ------ | ------ |
-| inputStream #1 | `process.stdin` |
-| outputStream #2 | `process.stdout` |
-| host #3 | `false` |
-| storage #4 | `false` |
-| modules dirs (rest) | `[]` |
+| Key | Default value | Description |
+| ------ | ------ | ------ |
+| inputStream | `process.stdin` | input stream |
+| outputStream | `process.stdout` | output stream |
+| host | `false` | console username |
+| storage | `false` | path for logs, etc |
+| repo | `[]` | Local moduls repositories |
 
 ### Simple module example
 

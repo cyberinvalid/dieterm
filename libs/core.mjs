@@ -29,8 +29,8 @@ export default class Terminal extends IO {
     constructor(settings) {
         super(settings.inputStream || process.stdin, settings.outputStream || process.stdout, settings.host, settings.storage);
 
-        if(settings.dirs)
-            this.mDirs.unshift(...settings.dirs);
+        if(settings.repo)
+            this.mDirs.unshift(...settings.repo);
 
         this.promise = new Promise(async resolve => {
             await fs.mkdir(this.logDir, { recursive: true });
