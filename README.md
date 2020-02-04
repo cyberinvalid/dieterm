@@ -10,6 +10,15 @@
 npm install --save https://github.com/cyberinvalid/dieterm.git
 ```
 
+### Requires
+
+- if nodejs older than `13.6.0` needs start with the parameter  --experimental-modules
+- also you can pass --experimental-json-modules
+
+```bash
+node --experimental-modules --experimental-json-modules ...
+```
+
 ### Quick Start
 ```javascript
 'use strict';
