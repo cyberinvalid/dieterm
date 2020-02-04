@@ -26,7 +26,7 @@ export default class Terminal extends IO {
     ]);
     savedStates = new Map();
 
-    constructor(settings) {
+    constructor(settings = {}) {
         super(settings.inputStream || process.stdin, settings.outputStream || process.stdout, settings.host, settings.storage);
 
         if(settings.repo)
