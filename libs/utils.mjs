@@ -27,11 +27,5 @@ export function dir(url) {
     return dirname(fileURLToPath(url));
 }
 
-export function isStream(stream) {
-    return stream !== null &&
-        typeof stream === 'object' &&
-        typeof stream.pipe === 'function';
-}
-
 export const LIBDIR = dir(import.meta.url);
 export const APPDATADIR = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : process.env.HOME + "/.local/share");
