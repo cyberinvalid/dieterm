@@ -8,14 +8,7 @@ let version = false;
 export default function clear() {
     return new Promise(async done => {
         if(!version) {
-            try {
-                version = (await import('../package.json')).default.version;
-            } catch(error) {
-                version = JSON.parse((await Promise.all([
-                    fs.readFile(join(LIBDIR, '../package.json')),
-                    this.log(Object.assign(error, { isHidden: true }))
-                ]))[0]).version;
-            }
+            version = JSON.parse(await fs.readFile(join(LIBDIR, '../package.json'))).version;
         }
 
         this.rl.output.write(`\x1b[2J\x1b[0f                                    ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄   
