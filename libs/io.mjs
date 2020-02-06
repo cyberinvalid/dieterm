@@ -132,7 +132,7 @@ export default class IO {
         const promise = this.question(name ? name : `${this.host}\x1b[30m\x1b[47m@\x1b[0mdie > `);
 
         if(placeholder)
-            rl.write(placeholder);
+            this.rl.write(placeholder);
         
         return await promise;
     }
