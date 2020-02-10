@@ -1,5 +1,5 @@
 'use strict';
 
-import Terminal from './libs/core.mjs';
+import Terminal from './src/core.mjs';
 
 (async () => { console.log(await new Terminal) })();

@@ -1,12 +1,15 @@
 {
   "name": "dieterm",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "DIE terminal",
   "type": "module",
-  "main": "./libs/core.mjs",
+  "main": "./src/core.mjs",
   "scripts": {
-    "dev": "node --no-warnings --experimental-json-modules -r dotenv/config ./standalone.mjs",
-    "start": "node --no-warnings --experimental-json-modules ./standalone.mjs"
+    "dev": "node --no-warnings -r dotenv/config ./standalone.mjs",
+    "start": "node --no-warnings ./standalone.mjs"
+  },
+  "exports": {
+    "./utils": "./src/utils.mjs"
   },
   "homepage": "https://github.com/cyberinvalid/dieterm",
   "bugs": {
