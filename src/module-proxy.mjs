@@ -199,6 +199,10 @@ export default (terminal, uuid) => class {
         return terminal.log(...args);
     }
 
+    find(...args) {
+        return terminal.find(...args);
+    }
+
     getVar(rVar, placeholder = '') {
         return terminal.readLine(`${(this.type||'module')}\x1b[30m\x1b[47m::\x1b[0m${this.name} > ${rVar}: `, placeholder)
     }
