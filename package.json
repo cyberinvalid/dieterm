@@ -9,6 +9,7 @@
     "start": "node --no-warnings ./standalone.mjs"
   },
   "exports": {
+    ".": "./src/core.mjs",
     "./utils": "./src/utils.mjs"
   },
   "homepage": "https://github.com/cyberinvalid/dieterm",
@@ -27,6 +28,7 @@
   "license": "MIT",
   "dependencies": {
     "lowdb": "^1.0.0",
+    "minimist": "^1.2.5",
     "subarg": "^1.0.0"
   },
   "devDependencies": {
