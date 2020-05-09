@@ -1,7 +1,7 @@
 class ModuleProxy {
     isKilled = false;
     lastUpdate = Date.now();
-    rArgs = new Set([ '_', 'l', 'last' ]);
+    rArgs = new Set(['_', 'l', 'last']);
     firstCall = true;
 
     constructor(terminal, uuid, module) {
@@ -21,7 +21,7 @@ class ModuleProxy {
         return new Proxy(method, {
             apply(...args) {
                 args[1] = proxy.terminal.db.storage;
-                args[2][0] = `Options.${name.split("/")[0]}.${args[2][0]}`;
+                args[2][0] = `Options.${name.split('/')[0]}.${args[2][0]}`;
 
                 return Reflect.apply(...args);
             }
@@ -33,11 +33,10 @@ class ModuleProxy {
         const name = Reflect.get(args[0], 'name');
 
         return new Proxy(this.terminal.db.storage, {
-            get(...args) {
-                const method = Reflect.get(...args);
-                if(typeof method==='function' && name) {
+            get(...getArgs) {
+                const method = Reflect.get(...getArgs);
+                if(typeof method === 'function' && name)
                     return proxy.dbMethodProxy(name, method);
-                }
             }
         });
     }
@@ -48,31 +47,28 @@ class ModuleProxy {
         const method = Reflect.get(...args);
 
         return new Proxy(method || (() => {}), {
-            async apply(...args) {
-                const result = await Reflect.apply(...args);
+            async apply(...applyArgs) {
+                const result = await Reflect.apply(...applyArgs);
 
                 proxy.isKilled = true;
                 proxy.terminal
                     .savedStates
                     .delete(name);
-                
+
                 return result;
             }
-        })
+        });
     }
 
     defineObjectProxy(name, property, target) {
         if(!this.firstCall) {
-            const properties = this.terminal
-                .savedStates
-                .get(name)
-                .properties;
+            const { properties } = this.terminal.savedStates.get(name);
 
             if(!properties.has(target)) {
                 return new Proxy(property, {
                     defineProperty(...args) {
                         properties.set(target, property);
-        
+
                         return Reflect.defineProperty(...args);
                     }
                 });
@@ -93,12 +89,13 @@ class ModuleProxy {
                         .get(name);
 
                     if(proxy.firstCall) {
-                        if(args[2][0].l || args[2][0].last && state) {
-                            state.properties
-                                .forEach((value, name) => Reflect.set(gArgs[0], name, value, gArgs[2]));
+                        if((args[2][0].l || args[2][0].last) && state) {
+                            state.properties.forEach((value, propName) =>
+                                Reflect.set(gArgs[0], propName, value, gArgs[2]));
                             gArgs[1] = state.target;
                             args[0] = Reflect.get(...gArgs);
-                            args[2] = Object.assign(state.params, [ { ...state.params[0], ...args[2][0] } ]);
+                            args[2] = Object
+                                .assign(state.params, [{ ...state.params[0], ...args[2][0] }]);
                         }
 
                         proxy.terminal
@@ -121,9 +118,9 @@ class ModuleProxy {
                     if(!proxy.isKilled) {
                         gArgs[1] = 'kill';
                         const killMethod = Reflect.get(...gArgs);
-                        if(killMethod) 
+                        if(killMethod)
                             await Reflect.apply(killMethod, args[1], []);
-                        proxy.isKilled = true;    
+                        proxy.isKilled = true;
                     }
 
                     throw error;
@@ -139,15 +136,13 @@ class ModuleProxy {
 
         const property = Reflect.get(...args);
 
-        if(typeof property==='function') {
+        if(typeof property === 'function') {
             const stack = Reflect.get(args[0], 'stack', args[2]);
-   
-            if(stack && stack.has(args[1]) && name) {
+
+            if(stack && stack.has(args[1]) && name)
                 return this.applyMethodProxy(name, property, args);
-            }
-        } else if(typeof property==='object') {
+        } else if(typeof property === 'object')
             return this.defineObjectProxy(name, property, args[1]);
-        }
 
         return property;
     }
@@ -156,35 +151,39 @@ class ModuleProxy {
         this.lastUpdate = Date.now();
 
         switch(args[1]) {
-            case 'db':
-                return this.dbProxy(...args);
-            case 'kill':
-                return this.killProxy(...args);
-            default:
-                return this.propertyProxy(...args);
+        case 'db':
+            return this.dbProxy(...args);
+        case 'kill':
+            return this.killProxy(...args);
+        default:
+            return this.propertyProxy(...args);
         }
     }
 
     set(...args) {
         this.lastUpdate = Date.now();
 
-        !this.firstCall && this.terminal
-            .savedStates
-            .get(Reflect.get(args[0], 'name'))
-            .properties
-            .set(args[1], args[2]);
+        if(!this.firstCall) {
+            this.terminal
+                .savedStates
+                .get(Reflect.get(args[0], 'name'))
+                .properties
+                .set(args[1], args[2]);
+        }
 
         return Reflect.set(...args);
     }
-    
+
     deleteProperty(...args) {
         this.lastUpdate = Date.now();
 
-        !this.firstCall && this.terminal
-            .savedStates
-            .get(Reflect.get(args[0], 'name'))
-            .properties
-            .delete(args[1]);
+        if(!this.firstCall) {
+            this.terminal
+                .savedStates
+                .get(Reflect.get(args[0], 'name'))
+                .properties
+                .delete(args[1]);
+        }
 
         return Reflect.deleteProperty(...args);
     }
@@ -195,23 +194,19 @@ export default (terminal, uuid) => class {
         return new ModuleProxy(terminal, uuid, this);
     }
 
-    log(...args) {
-        return terminal.log(...args);
-    }
-
-    find(...args) {
-        return terminal.find(...args);
-    }
+    log = terminal.log.bind(terminal);
+    find = terminal.find.bind(terminal);
 
     getVar(rVar, placeholder = '') {
-        return terminal.readLine(`${(this.type||'module')}\x1b[30m\x1b[47m::\x1b[0m${this.name} > ${rVar}: `, placeholder)
+        return terminal.readLine(`${(this.type || 'module')}\x1b[30m\x1b[47m::\x1b[0m${this.name} > ${rVar}: `, placeholder);
     }
 
     async getObject(...array) {
         const rObject = {};
-        for(let i=0;i<array.length;i++) {
-            rObject[array[i]] = await this.getVar(array[i]);
-        }
+        const rArray = await Promise.all(array.map(varName => this.getVar(varName)));
+        for(let i = 0; i < array.length; i += 1)
+            rObject[array[i]] = rArray[i];
+
         return rObject;
     }
-}
+};

@@ -1,16 +1,16 @@
 {
   "name": "dieterm",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "DIE terminal",
   "type": "module",
-  "main": "./src/core.mjs",
+  "main": "./src/core.js",
   "scripts": {
-    "dev": "node --no-warnings -r dotenv/config ./standalone.mjs",
-    "start": "node --no-warnings ./standalone.mjs"
+    "dev": "node --es-module-specifier-resolution=node --no-warnings -r dotenv/config ./standalone.js",
+    "start": "node --es-module-specifier-resolution=node --no-warnings ./standalone.js"
   },
   "exports": {
-    ".": "./src/core.mjs",
-    "./utils": "./src/utils.mjs"
+    ".": "./src/core.js",
+    "./utils": "./src/utils.js"
   },
   "homepage": "https://github.com/cyberinvalid/dieterm",
   "bugs": {
@@ -32,7 +32,11 @@
     "subarg": "^1.0.0"
   },
   "devDependencies": {
-    "dotenv": "^8.2.0"
+    "babel-eslint": "^10.1.0",
+    "dotenv": "^8.2.0",
+    "eslint": "^6.8.0",
+    "eslint-config-cyberinvalid": "^1.0.2",
+    "eslint-plugin-import": "^2.20.2"
   },
   "engines": {
     "node": ">=10.12.0",
