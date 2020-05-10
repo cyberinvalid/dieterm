@@ -15,13 +15,21 @@ const LOGTYPE = {
 
 export default class IO {
     session = uuid();
+
     logLocked = false;
+
     lnPoint = false;
+
     streamReadyStack = [];
+
     host = process.env.host || os.userInfo().username.toLowerCase();
+
     logDir = join(APPDATADIR, './dieterm/storage/logs/');
+
     fileDir = join(APPDATADIR, './dieterm/storage/files/');
+
     storageLink = join(APPDATADIR, './dieterm/storage/index.json');
+
     mDirs = [join(LIBDIR, '../modules/')];
 
     constructor(settings) {
@@ -46,10 +54,11 @@ export default class IO {
     }
 
     question(q) {
-        return new Promise(done => this.rl.question(q, answer => {
-            this.rl.pause();
-            done(answer);
-        }));
+        return new Promise(done =>
+            this.rl.question(q, answer => {
+                this.rl.pause();
+                done(answer);
+            }));
     }
 
     errorLog(log, error) {
@@ -104,7 +113,8 @@ export default class IO {
 
     async log(...logs) {
         if(logs.length > 1) {
-            await Promise.all(logs.map(log => this.log(log)));
+            await Promise.all(logs.map(log =>
+                this.log(log)));
             return;
         }
 
@@ -144,10 +154,13 @@ export default class IO {
     async streamReady() {
         if(!this.logLocked)
             return;
-        await new Promise(done => this.rl.once('pause', () => {
-            this.logLocked = false;
-            done();
-        }));
+
+        await new Promise(done =>
+            this.rl.once('pause', () => {
+                this.logLocked = false;
+                done();
+            }));
+
         if(!this.logLocked)
             await this.streamReady();
         this.logLocked = true;

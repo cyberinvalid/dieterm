@@ -1,7 +1,10 @@
 class ModuleProxy {
     isKilled = false;
+
     lastUpdate = Date.now();
+
     rArgs = new Set(['_', 'l', 'last']);
+
     firstCall = true;
 
     constructor(terminal, uuid, module) {
@@ -37,6 +40,8 @@ class ModuleProxy {
                 const method = Reflect.get(...getArgs);
                 if(typeof method === 'function' && name)
                     return proxy.dbMethodProxy(name, method);
+
+                return method;
             }
         });
     }
@@ -189,24 +194,27 @@ class ModuleProxy {
     }
 }
 
-export default (terminal, uuid) => class {
-    constructor() {
-        return new ModuleProxy(terminal, uuid, this);
-    }
+export default (terminal, uuid) =>
+    class {
+        constructor() {
+            return new ModuleProxy(terminal, uuid, this);
+        }
 
-    log = terminal.log.bind(terminal);
-    find = terminal.find.bind(terminal);
+        log = terminal.log.bind(terminal);
 
-    getVar(rVar, placeholder = '') {
-        return terminal.readLine(`${(this.type || 'module')}\x1b[30m\x1b[47m::\x1b[0m${this.name} > ${rVar}: `, placeholder);
-    }
+        find = terminal.find.bind(terminal);
 
-    async getObject(...array) {
-        const rObject = {};
-        const rArray = await Promise.all(array.map(varName => this.getVar(varName)));
-        for(let i = 0; i < array.length; i += 1)
-            rObject[array[i]] = rArray[i];
+        getVar(rVar, placeholder = '') {
+            return terminal.readLine(`${(this.type || 'module')}\x1b[30m\x1b[47m::\x1b[0m${this.name} > ${rVar}: `, placeholder);
+        }
 
-        return rObject;
-    }
-};
+        async getObject(...array) {
+            const rObject = {};
+            const rArray = await Promise.all(array.map(varName =>
+                this.getVar(varName)));
+            for(let i = 0; i < array.length; i += 1)
+                rObject[array[i]] = rArray[i];
+
+            return rObject;
+        }
+    };

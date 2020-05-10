@@ -17,6 +17,7 @@ export default class Terminal extends IO {
         ['use', this.use],
         ['flush', this.flush]
     ]);
+
     savedStates = new Map();
 
     constructor(settings = {}) {

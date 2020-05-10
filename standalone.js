@@ -1,3 +1,4 @@
 import Terminal from './src/core';
 
-(async () => console.log(await new Terminal()))();
+(async () =>
+    console.log(await new Terminal()))();

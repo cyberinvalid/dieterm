@@ -15,7 +15,7 @@ export default class DataBase {
 
     update(...args) {
         if(!this.ready)
-            return;
+            return false;
 
         if(args.length === 3) {
             const fData = this.driver
@@ -36,7 +36,7 @@ export default class DataBase {
 
     remove(...args) {
         if(!this.ready)
-            return;
+            return false;
 
         if(args.length === 2) {
             return this.driver
@@ -52,7 +52,7 @@ export default class DataBase {
 
     clear(...args) {
         if(!this.ready)
-            return;
+            return false;
 
         if(args.length) {
             return this.driver
@@ -67,7 +67,7 @@ export default class DataBase {
 
     getAll(...args) {
         if(!this.ready)
-            return;
+            return false;
 
         if(args.length === 2) {
             return this.driver
@@ -83,7 +83,7 @@ export default class DataBase {
 
     get(...args) {
         if(!this.ready)
-            return;
+            return false;
 
         if(args.length === 2) {
             return this.driver
@@ -99,7 +99,7 @@ export default class DataBase {
 
     add(...args) {
         if(!this.ready)
-            return;
+            return false;
 
         if(args.length === 2) {
             return this.driver

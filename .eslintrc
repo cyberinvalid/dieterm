@@ -9,11 +9,12 @@
         "babelOptions": {}
     },
     "extends": [
-        "cyberinvalid"
+        "cyberinvalid-base"
     ],
     "rules": {
         "no-await-in-loop": 0,
         "no-constant-condition": 0,
-        "max-classes-per-file": ["error", 2]
+        "max-classes-per-file": ["error", 2],
+        "class-methods-use-this": ["error", { "exceptMethods": ["errorLog", "logTime", "isExist", "exit"] }]
     }
 }

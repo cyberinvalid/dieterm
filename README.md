@@ -13,9 +13,10 @@ npm install dieterm --save
 ### Requires
 
 - if nodejs older than `13.6.0` needs start with the parameter  --experimental-modules
+- also need to use --es-module-specifier-resolution=node
 
 ```bash
-node --experimental-modules ...
+node --es-module-specifier-resolution=node --experimental-modules ...
 ```
 
 ### Quick Start
