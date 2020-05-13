@@ -210,10 +210,18 @@ export default (terminal, uuid) =>
 
         async getObject(...array) {
             const rObject = {};
-            const rArray = await Promise.all(array.map(varName =>
-                this.getVar(varName)));
+            const promise = array.reduce((acc, rVar) =>
+                acc.then(res =>
+                    this.getVar(rVar).then(rValue => {
+                        res.push(rValue);
+
+                        return res;
+                    })), Promise.resolve([]));
+
+            const result = await promise;
+
             for(let i = 0; i < array.length; i += 1)
-                rObject[array[i]] = rArray[i];
+                rObject[array[i]] = result[i];
 
             return rObject;
         }

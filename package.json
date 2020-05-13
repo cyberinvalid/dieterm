@@ -35,7 +35,7 @@
     "babel-eslint": "^10.1.0",
     "dotenv": "^8.2.0",
     "eslint": "^6.8.0",
-    "eslint-config-cyberinvalid-base": "^1.0.0",
+    "eslint-config-cyberinvalid": "^1.0.5",
     "eslint-plugin-import": "^2.20.2"
   },
   "engines": {

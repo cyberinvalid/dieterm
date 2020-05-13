@@ -9,7 +9,7 @@
         "babelOptions": {}
     },
     "extends": [
-        "cyberinvalid-base"
+        "cyberinvalid"
     ],
     "rules": {
         "no-await-in-loop": 0,
